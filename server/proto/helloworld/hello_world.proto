@@ -1,0 +1,49 @@
+syntax = "proto3";
+
+package helloworld;
+
+import "google/api/annotations.proto";
+
+option go_package = "./helloworld";
+
+// The greeting service definition
+service Greeter {
+  // Sends a greeting
+  rpc SayHello (HelloRequest) returns (HelloReply) {
+    option (google.api.http) = {
+      post: "/v1/example/echo"
+      body: "*"
+    };
+  }
+}
+
+// The request message containing the user's name
+message HelloRequest {
+  string name = 1;
+}
+
+// The response message containing the greetings
+message HelloReply {
+  string message = 1;
+}
+
+message TaskEvent {
+  enum TaskOp {
+    UNKNOWN = 0;
+    STATUS = 1;
+  }
+  string client_id = 1;
+  repeated int64 task_ids = 2;
+  string op = 3;
+}
+
+message TaskEventResponse{
+  enum TaskStatus {
+    UNKNOWN = 0;
+    WAITING = 1;
+    SATRTED = 2;
+    FINISHED = 3;
+  }
+  int64 task_id = 1;
+  TaskStatus status = 2;
+}
